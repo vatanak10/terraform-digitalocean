@@ -24,3 +24,45 @@ resource "digitalocean_droplet" "api_gateway" {
       kong:latest
   EOF
 }
+
+resource "digitalocean_firewall" "api_gateway_firewall" {
+  name = "api-gateway-firewall"
+
+  # Allow inbound traffic on the specified ports
+  inbound_rule {
+    protocol         = "tcp"
+    port_range       = "8000"
+    source_addresses = ["0.0.0.0/0", "::/0"]
+  }
+  inbound_rule {
+    protocol         = "tcp"
+    port_range       = "8443"
+    source_addresses = ["0.0.0.0/0", "::/0"]
+  }
+  inbound_rule {
+    protocol         = "tcp"
+    port_range       = "8001"
+    source_addresses = ["0.0.0.0/0", "::/0"]
+  }
+  inbound_rule {
+    protocol         = "tcp"
+    port_range       = "8444"
+    source_addresses = ["0.0.0.0/0", "::/0"]
+  }
+
+  # Allow all outbound traffic
+  outbound_rule {
+    protocol              = "tcp"
+    port_range            = "1-65535"
+    destination_addresses = ["0.0.0.0/0", "::/0"]
+  }
+  outbound_rule {
+    protocol              = "udp"
+    port_range            = "1-65535"
+    destination_addresses = ["0.0.0.0/0", "::/0"]
+  }
+
+  # Apply the firewall to the Droplet
+  droplet_ids = [digitalocean_droplet.api_gateway.id]
+}
+
