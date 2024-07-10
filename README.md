@@ -1,6 +1,6 @@
 # terraform-digitalocean
-Repository for Terraform on DigitalOcean project
 
+Repository for Terraform on DigitalOcean project
 
 ```bash
 nano ~/.bashrc
@@ -10,10 +10,12 @@ nano ~/.bashrc
 . ~/.bashrc
 ```
 
+## Planning and Applying the infrastructure
+
 ```bash
 terraform plan \
   -var "do_token=${DO_PAT}" \
-  -var "pvt_key=$HOME/.ssh/id_rsa" 
+  -var "pvt_key=$HOME/.ssh/id_rsa"
 ```
 
 ```bash
