@@ -7,14 +7,14 @@ resource "digitalocean_database_cluster" "postgres_db" {
   node_count = 1
 }
 
-# resource "digitalocean_database_firewall" "db_firewall" {
-#   cluster_id = digitalocean_database_cluster.postgres_db.id
+resource "digitalocean_database_firewall" "db_firewall" {
+  cluster_id = digitalocean_database_cluster.postgres_db.id
 
-#   rule {
-#     type  = "ip_addr"
-#     value = "0.0.0.0/0" # Allow all IPs for simplicity; restrict in production
-#   }
-# }
+  rule {
+    type  = "ip_addr"
+    value = "0.0.0.0/0" # Allow all IPs for simplicity; restrict in production
+  }
+}
 
 output "db_host" {
   value = digitalocean_database_cluster.postgres_db.host
@@ -24,16 +24,14 @@ output "db_port" {
   value = digitalocean_database_cluster.postgres_db.port
 }
 
-output "db_name" {
-  value = digitalocean_database_cluster.postgres_db.database
-}
-
 output "db_user" {
   value = digitalocean_database_cluster.postgres_db.user
 }
 
-output "db_uri" {
-  value     = digitalocean_database_cluster.postgres_db.uri
-  sensitive = true
+output "db_password" {
+  value = digitalocean_database_cluster.postgres_db.password
 }
 
+output "db_name" {
+  value = digitalocean_database_cluster.postgres_db.name
+}
