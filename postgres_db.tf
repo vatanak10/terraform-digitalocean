@@ -11,8 +11,8 @@ resource "digitalocean_database_cluster" "postgres_db" {
 #   cluster_id = digitalocean_database_cluster.postgres_db.id
 
 #   rule {
-#     type  = "droplet"
-#     value = "your_droplet_id_here"
+#     type  = "ip_addr"
+#     value = "0.0.0.0/0" # Allow all IPs for simplicity; restrict in production
 #   }
 # }
 
@@ -33,7 +33,7 @@ output "db_user" {
 }
 
 output "db_uri" {
-  value = digitalocean_database_cluster.postgres_db.uri
+  value     = digitalocean_database_cluster.postgres_db.uri
   sensitive = true
 }
 
